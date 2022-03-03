@@ -7,9 +7,11 @@ const {
     deleteGoal, 
 } = require('../controllers/goalController')
 
-// Specifies routes for when router calls the RESTful functions we created (ie, getGoals, setGoals)
+const { protect } = require('../middleware/authMiddleware')
 
-router.route('/').get(getGoals).post(setGoal)
-router.route('/:id').delete(deleteGoal).put(updateGoal)
+// Clean way to write same routes for RESTful functions we created (ie, getGoals, setGoals)
+
+router.route('/').get(protect, getGoals).post(protect, setGoal)
+router.route('/:id').delete(protect, deleteGoal).put(protect, updateGoal)
 
 module.exports = router
